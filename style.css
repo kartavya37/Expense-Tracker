@@ -1,0 +1,635 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #111111;
+    --main-color: #2a2f8f;
+    --border-radius: 8px;
+    --padding-base: 10px;
+    --transition-speed: 0.2s;
+    --hover-scale: 1.02;
+    --font-family-base: "Inter", sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: #f0f2f5;
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+h3,
+header {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+}
+
+main {
+    width: min(1200px, 95%);
+    margin: 1rem auto;
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    animation: slideIn 0.6s ease-out;
+}
+
+header {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+header div {
+    padding: 5px;
+}
+
+header div:first-child {
+    flex-basis: 100%;
+    font-size: 2.25rem;
+    font-weight: 600;
+}
+
+header div:nth-child(n + 2) {
+    flex-basis: 50%;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+header h5 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.currency-selector {
+    flex-basis: 100% !important;
+    margin-top: 10px;
+    position: relative;
+}
+
+.currency-select {
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-family: var(--font-family-base);
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.currency-select:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.currency-select option {
+    background: var(--main-color);
+    color: white;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+form input:not(#type),
+form button,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    margin-bottom: 5px;
+    height: 42px;
+    font-family: var(--font-family-base);
+    font-size: 1rem;
+    background-color: #fff;
+    color: var(--text-color);
+}
+
+form input:focus,
+select:focus {
+    outline: 2px solid var(--main-color);
+}
+
+form button {
+    background-color: var(--main-color);
+    border: none;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    grid-column: span 2;
+    transition: background-color 0.25s ease;
+}
+
+form button,
+.delete-transaction {
+    cursor: pointer;
+    transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+form button:hover {
+    background-color: #232974;
+}
+
+form button:active {
+    transform: scale(1.05);
+    animation: bounce 0.5s;
+}
+
+form label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: block;
+}
+
+form div:nth-child(-n + 2) {
+    grid-column: span 2;
+}
+
+form div:nth-child(n + 3) {
+    flex-basis: calc(50% - 5px);
+}
+
+input#type {
+    appearance: none;
+    position: absolute;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: yellowgreen;
+    border-radius: var(--border-radius);
+    position: relative;
+    transition: background-color 0.25s;
+    cursor: pointer;
+    color: #fff;
+}
+
+.option::before {
+    content: attr(data-option);
+}
+
+.option::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 0;
+    background-color: #fff;
+    height: calc(100% - 10px);
+    width: calc(50% - 10px);
+    transform: translateX(5px);
+    border-radius: inherit;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    transition: left 200ms;
+}
+
+.option::before,
+.option span {
+    width: 50%;
+    text-align: center;
+    cursor: inherit;
+    z-index: 2;
+}
+
+input#type:checked~.option::after {
+    left: 50%;
+}
+
+input#type:checked~.option {
+    background-color: indianred;
+}
+
+input#type:checked~.option span,
+input#type:not(:checked)~.option::before {
+    color: #1d1f27;
+}
+
+input[type="date"] {
+    appearance: none;
+    background-color: #fff;
+    color: #1d1f27;
+    text-align: start;
+}
+
+select#category {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    margin-bottom: 5px;
+    height: 42px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.category-label {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 2px;
+    text-transform: capitalize;
+    background-color: #f0f2f5;
+    padding: 2px 8px;
+    border-radius: var(--border-radius);
+}
+
+ul {
+    list-style-type: none;
+    margin-bottom: 0.5rem;
+    height: 200px;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+}
+
+ul:empty {
+    border: 2px dashed #ddd;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul:empty::before {
+    content: attr(data-placeholder);
+}
+
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 8px;
+    padding: 12px 16px;
+    position: relative;
+    gap: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid #f0f0f0;
+    transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    animation: fadeIn 0.5s ease-out;
+}
+
+ul li:hover {
+    background: #f8f9fa;
+    border-color: #e0e0e0;
+    transform: scale(var(--hover-scale));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.name {
+    flex: 1;
+}
+
+.name h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.name p {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.amount {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.amount.income {
+    color: yellowgreen;
+}
+
+.amount.expense {
+    color: indianred;
+}
+
+.delete-transaction {
+    background-color: #f1f1f1;
+    border: none;
+    color: #333;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+    margin-left: 8px;
+}
+
+.delete-transaction:hover {
+    background-color: #ffe0e0;
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
+.delete-transaction:active {
+    transform: scale(0.95);
+}
+
+.delete-transaction i {
+    font-size: 18px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-transaction {
+    background-color: #f1f1f1;
+    border: none;
+    color: #333;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+    margin-left: 8px;
+}
+
+.edit-transaction:hover {
+    background-color: #e0e0e0;
+    color: #2196F3;
+    transform: scale(1.1);
+}
+
+.edit-transaction:active {
+    transform: scale(0.95);
+}
+
+.edit-transaction i {
+    font-size: 18px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+@keyframes loading {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.animate-pulse {
+    animation: pulse 0.5s ease;
+}
+
+#balance.loading,
+#income.loading,
+#expense.loading {
+    animation: loading 1s infinite;
+}
+
+#balance,
+#income,
+#expense {
+    white-space: nowrap;
+}
+
+.split-container {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    height: auto;
+}
+
+.left-panel,
+.right-panel {
+    background: #fff;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    height: auto;
+}
+
+.left-panel {
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 2 1 300px;
+    overflow-y: auto;
+}
+
+.transaction-history-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-history-section ul {
+    flex: 1;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .split-container {
+        flex-direction: column;
+        height: auto;
+        gap: 1rem;
+    }
+
+    .left-panel,
+    .right-panel {
+        height: auto;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .left-panel {
+        flex: 1 1 100%;
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .left-panel header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .left-panel header div {
+        flex-basis: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .add-transaction-section form {
+        grid-template-columns: 1fr;
+    }
+
+    .heading-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.filter-category-select {
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    font-family: var(--font-family-base);
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    margin: 0.5rem 0 1rem 0;
+    min-width: 140px;
+}
+
+.filter-category-select:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+}
+
+.filter-category-select:focus {
+    outline: none;
+    border-color: var(--main-color);
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    margin-bottom: 5px;
+    font-family: var(--font-family-base);
+    font-size: 1rem;
+}
+
+.full-width textarea#description {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+.action-buttons {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-buttons button {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#statsButton {
+    background-color: #2196F3;
+    color: white;
+}
+
+#calcButton {
+    background-color: #e6ac48;
+    color: white;
+}
+
+#notesButton {
+    background-color: #9C27B0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#statsButton:hover, #calcButton:hover, #notesButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

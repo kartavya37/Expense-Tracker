@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="calculatorStyle.css" />
+    <link rel="stylesheet" href="statisticsStyle.css" />
+    <link rel="stylesheet" href="notesStyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body >
+    <main >
+        <div class="split-container">
+            <!-- Left Panel: Contains balance info and transaction form -->
+            <div class="left-panel">
+                <!-- Action Buttons: Statistics, Notes, Calculator -->
+                <div class="action-buttons">
+                    <button id="statsButton" style="width: 100%;">Statistics</button>
+                    <button id="notesButton">Notes</button>
+                    <button id="calcButton">Calculator</button>
+                </div>
+                <!-- Header: Displays balance, income, and expense -->
+                <header>
+                    <div>
+                        <h5>Total Balance</h5>
+                        <span id="balance">₹0.00</span>
+                    </div>
+                    <div>
+                        <h5>Income</h5>
+                        <span id="income">₹0.00</span>
+                    </div>
+                    <div>
+                        <h5>Expense</h5>
+                        <span id="expense">₹0.00</span>
+                    </div>
+                    <!-- Currency Selector -->
+                    <div class="currency-selector">
+                        <select id="currencySelect" class="currency-select">
+                            <option value="INR">INR</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="AUD">AUD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="CHF">CHF</option>
+                            <option value="CNY">CNY</option>
+                        </select>
+                    </div>
+                </header>
+                <!-- Add Transaction Section -->
+                <section class="add-transaction-section">
+                    <h3>Add Transaction</h3>
+                    <!-- Transaction Form -->
+                    <form id="transactionForm">
+                        <!-- Expense/Income Type Toggle -->
+                        <div class="form-group">
+                            <label for="type">
+                                <input type="checkbox" name="type" id="type" checked />
+                                <div class="option" data-option="Income">
+                                    <span>Expense</span>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Transaction Name -->
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" required />
+                        </div>
+                        <!-- Transaction Amount -->
+                        <div class="form-group">
+                            <label for="amount">Amount (₹)</label>
+                            <input type="number" name="amount" id="amount" value="0" min="0" step="any" inputmode="decimal" required onfocus="this.select()" />
+                        </div>
+                        <!-- Transaction Date -->
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" name="date" id="date" required />
+                        </div>
+                        <!-- Transaction Category -->
+                        <div class="form-group full-width">
+                            <label for="category">Category</label>
+                            <select name="category" id="category" required>
+                                <option value="">Select Category</option>
+                                <option value="food">Food</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="health">Health</option>
+                                <option value="education">Education</option>
+                                <option value="salary">Salary</option>
+                                <option value="investment">Investment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <!-- Transaction Description -->
+                        <div class="form-group full-width">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" placeholder="Enter description"></textarea>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="form-group full-width">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <!-- Right Panel: Contains transaction history -->
+            <div class="right-panel">
+                <section class="transaction-history-section">
+                    <h3>Transactions</h3>
+                    <!-- Category Filter -->
+                    <select id="filterCategory" class="filter-category-select">
+                        <option value="">All</option>
+                        <option value="food">Food</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainmentz">Entertainment</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="health">Health</option>
+                        <option value="education">Education</option>
+                        <option value="salary">Salary</option>
+                        <option value="investment">Investment</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <!-- Transaction List -->
+                    <ul id="transactionList" data-placeholder="No transactions."></ul>
+                </section>
+            </div>
+        </div>
+    </main>
+    <!-- Calculator Modal -->
+    <div id="calculatorModal" class="calculator-modal">
+        <div class="calculator-container">
+            <div class="calculator">
+                <input class="input" type="text" disabled/>
+                <div class="buttons">
+                    <div class="row">
+                        <button class="button">7</button>
+                        <button class="button">8</button>
+                        <button class="button">9</button>
+                        <button class="button">/</button>
+                    </div>
+                    <div class="row">
+                        <button class="button">4</button>
+                        <button class="button">5</button>
+                        <button class="button">6</button>
+                        <button class="button">*</button>
+                    </div>
+                    <div class="row">
+                        <button class="button">1</button>
+                        <button class="button">2</button>
+                        <button class="button">3</button>
+                        <button class="button">-</button>
+                    </div>
+                    <div class="row">
+                        <button class="button">0</button>
+                        <button class="button">.</button>
+                        <button class="button">=</button>
+                        <button class="button">+</button>
+                    </div>
+                    <div class="row">
+                        <button class="button span-2">C</button>
+                        <button class="button span-2">←</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Modal -->
+    <div id="statisticsModal" class="statistics-modal">
+        <div class="statistics-container">
+            <button class="close-modal">&times;</button>
+            <div class="statistics-content">
+                <h2>Transaction Statistics</h2>
+                <div class="stats-options">
+                    <button class="stats-tab active" data-type="overview">Income vs Expense</button>
+                    <button class="stats-tab" data-type="income">Income</button>
+                    <button class="stats-tab" data-type="expense">Expense</button>
+                </div>
+                <canvas id="categoryPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes Modal -->
+    <div id="notesModal" class="notes-modal">
+        <div class="notes-container">
+            <button class="close-modal">&times;</button>
+            <div class="notes-content">
+                <h2>My Notes</h2>
+                <div class="notes-input-container">
+                    <div class="note-editor">
+                        <input type="text" id="noteTitle" placeholder="Note Title">
+                        <textarea id="noteText" placeholder="Write your note here..."></textarea>
+                        <button id="saveNote">Add Note</button>
+                    </div>
+                </div>
+                <div class="notes-list"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script src="calculatorScript.js"></script>
+    <script src="statisticsScript.js"></script>
+    <script src="notesScript.js"></script>
+</body>
+</html>
